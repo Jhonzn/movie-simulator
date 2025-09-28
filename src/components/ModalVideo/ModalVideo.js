@@ -1,0 +1,39 @@
+import React, {useState, useEffect} from "react";
+import "./ModalVideo.scss";
+import {Modal} from "antd";
+import ReactPlayer from 'react-player'
+
+export default function ModalVideo(props) {
+
+    const {videoKey, videoPlatform, isOpen, close} = props;
+
+    const [urlVideo, setUrlVideo] = useState(null);
+
+    useEffect(() => {
+
+        switch (videoPlatform) {
+            case "YouTube":
+                setUrlVideo(`https://www.youtube.com/watch?v=${videoKey}`);
+                break;
+            case "Vimeo":
+                setUrlVideo(`https://vimeo.com/${videoKey}`);
+                break;
+            default:
+                break;
+        }
+
+    },[videoKey, videoPlatform])
+
+    console.log(urlVideo);
+    
+    return (
+        <Modal
+        className="modal-video"
+        open={isOpen}
+        centered
+        onCancel={close}
+        footer={false}>
+            <ReactPlayer url={urlVideo} controls/>
+        </Modal>
+    );
+}
